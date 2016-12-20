@@ -1,0 +1,21 @@
+{
+  "name": "book-app",
+  "version": "1.0.0",
+  "description": "这是一个回顾node.js相关知识的联练练习项目",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express",
+    "mongodb",
+    "mongoose"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "art-template": "^3.0.3",
+    "express": "^4.14.0",
+    "mongoose": "^4.6.7"
+  }
+}

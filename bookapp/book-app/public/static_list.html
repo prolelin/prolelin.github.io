@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>图书列表项</title>
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h3 class="panel-title">书籍信息列表</h3>
+        </div>
+        <div class="panel-body">
+
+            <table class="table table-bordered  table-hover">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>图片</th>
+                        <th>标题</th>
+                        <th>作者</th>
+                        <th>出版社</th>
+                        <th>价格</th>
+                    </tr>
+                </thead>
+                <tbody id='tdate'>
+                    
+                </tbody>
+            </table>
+            <a id='nextPage' class="btn btn-large btn-block btn-danger">下一页</a>
+        </div>
+    </div>
+
+
+    <script src='../lib/jquery-1.9.1.js'></script>
+    <script src="/lib/template.js"></script>
+    <script src='../lib/bootstrap/js/bootstrap.min.js'></script>
+
+    <script type='text/html' id='tplList'>
+    {{each data}}
+        <tr>
+            <td>{{$index+1+(currentPage-1)*10}}</td>
+            <td><img src="{{$value.img}}" class="img-responsive" alt="Image"></td>
+            <td>{{$value.title}}</td>
+            <td>{{$value.author}}</td>
+            <td>{{$value.publisher}}</td>
+            <td>{{$value.price}}</td>
+        </tr>
+    {{/each}}
+</script>
+</body>
+
+</html>
+<script>
+    var currentPage=1; 
+    getData();
+    $('#nextPage').click(function(){
+        currentPage=currentPage+1;
+        getData();
+    })
+    function getData(){
+        $.ajax({
+        type:'get',
+        url:'/api/v1/books?page'+currentPage,
+        dataType:'json',
+        success:function(res){
+            var data=res.data
+            var strHtml=template('tplList',{data:data,currentPage:currentPage})
+            $('#tdate').append(strHtml)
+        },
+        error:function(err){
+            console.log(err)
+        }
+    })
+    }
+</script>
